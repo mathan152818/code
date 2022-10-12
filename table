@@ -1,5 +1,5 @@
-import java.util.Scanner;
-
+import java.util.Scanner
+//new change......
 public class tables1 {
 	
 		public static void main(String[] args) {
