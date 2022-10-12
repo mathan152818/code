@@ -1,0 +1,224 @@
+import java.util.Scanner;
+
+public class tables1 {
+	
+		public static void main(String[] args) {
+
+			boolean start=true;
+			
+	 while(start){
+		 int num =0;
+		 outer:{
+		 num=0;
+		System.out.println("Enter 1 for addition table"+"\n"+"Enter 2 for subraction table"+"\n"+"Enter 3 for multiplication table"+"\n"+ "Enter 4 for Division table\n"+"enter 0 to stop the program");
+			Scanner sc = new Scanner(System.in);
+			
+				try{
+				num=sc.nextInt();
+				
+				}
+				catch (Exception e) {
+					try
+					{
+					new ProcessBuilder("cmd","/c","cls").inheritIO().start().waitFor();
+					}
+					catch(Exception a){
+						
+					}
+					System.out.println("please enter a correct value");
+					
+					sc.nextLine();
+					break outer;
+				}
+	 
+		
+			if(num==0||num==1||num==2||num==3||num==4){
+				
+				
+			
+			if(num==0)
+			{
+				System.out.println("exit....");
+				start=false;
+			}
+			
+			if(num==1)
+			{
+				int addnum=0;
+			 boolean add=true;
+			
+			 while(add){
+			 
+			 
+				System.out.println("Which addtion table you want......");
+				
+				try{
+					addnum=sc.nextInt();
+					if(addnum==0){
+						throw new ArithmeticException();
+					}
+					add = false;
+					}
+					catch (Exception e) {
+						try
+						{
+						new ProcessBuilder("cmd","/c","cls").inheritIO().start().waitFor();
+						}
+						catch(Exception a){
+							
+						}
+						add=true;
+						System.out.println("please enter a correct value");
+						sc.nextLine();
+					}
+			 }
+			
+				for(int i =1;i<=20;i++)
+				{
+					System.out.println("| "+i+" + "+addnum+" = "+(i+addnum)+" |");
+				}
+			
+				System.out.println("here is your table.............");
+			}
+			
+			if(num==2)
+			{
+				int subnum=0;
+				
+			 boolean sub=true;
+				
+			 while(sub){
+				 
+				System.out.println("Which subraction table you want......");
+				
+				try{
+					subnum=sc.nextInt();
+					if(subnum==0){
+						throw new ArithmeticException();
+					}
+					sub = false;
+					}
+					catch (Exception e) {
+						try
+						{
+						new ProcessBuilder("cmd","/c","cls").inheritIO().start().waitFor();
+						}
+						catch(Exception a){
+							
+						}
+						sub=true;
+						System.out.println("please enter a correct value");
+						sc.nextLine();
+					}
+				
+			 }
+			
+				for(int i =1;i<=20;i++)
+				{
+					System.out.println("| "+i+" - "+subnum+" = "+(i-subnum)+" |");
+				}
+
+				System.out.println("here is your table.............");
+			}
+			
+			if(num==3)
+			{
+				int mulnum=0;
+				
+				 boolean mul=true;
+				
+				 while(mul){
+				 
+				 
+					System.out.println("Which Multiplication table you want......");
+					try{
+						mulnum=sc.nextInt();
+						if(mulnum==0){
+							throw new ArithmeticException();
+						}
+						mul = false;
+						}
+						catch (Exception e) {
+							try
+							{
+							new ProcessBuilder("cmd","/c","cls").inheritIO().start().waitFor();
+							}
+							catch(Exception a){
+								
+							}
+							mul=true;
+							System.out.println("please enter a correct value");
+							sc.nextLine();
+						
+						}
+				 }
+				
+				for(int i =1;i<=20;i++)
+				{
+					System.out.println("| "+i+" x "+mulnum+" = "+(i*mulnum)+" |");
+				}
+				
+				System.out.println("here is your table.............");
+			}
+			
+			if(num==4)
+			{
+				int divnum=0;
+				
+				 boolean div=true;
+				
+				 while(div){
+				 
+				 
+					System.out.println("Which Division table you want......");
+					try{
+						divnum=sc.nextInt();
+						if(divnum==0){
+							throw new ArithmeticException();
+						}
+						div = false;
+						}
+						catch (Exception e) {
+							try
+							{
+							new ProcessBuilder("cmd","/c","cls").inheritIO().start().waitFor();
+							}
+							catch(Exception a){
+								
+							}
+							div=true;
+							System.out.println("please enter a correct value");
+							sc.nextLine();
+			
+						
+						}
+				 }
+			
+				for(int i =1;i<=20;i++)
+				{
+					System.out.println("| "+i+" / "+divnum+" = "+(i/divnum)+" |");
+				}
+				
+				System.out.println("here is your table.............");
+			}
+
+		}	
+	 	
+			else
+			{
+				try
+				{
+				new ProcessBuilder("cmd","/c","cls").inheritIO().start().waitFor();
+				}
+				catch(Exception a){
+					
+				}
+				System.out.println("please enter correct value");
+			}
+		}
+		}
+
+		}
+	}
+
+
