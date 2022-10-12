@@ -5,7 +5,7 @@ public class tables1 {
 		public static void main(String[] args) {
 
 			boolean start=true;
-			
+//while loop started.........
 	 while(start){
 		 int num =0;
 		 outer:{
