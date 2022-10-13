@@ -61,20 +61,16 @@ public class tables2 {
 						start = false;
 					}
 					if (num == 1) {
-						int addnum = input("Addition");
-						loop('+', addnum);
+						loop('+', input("Addition"));
 					}
 					if (num == 2) {
-						int subnum = input("Subraction");
-						loop('-', subnum);
+						loop('-', input("Subraction"));
 					}
-					if (num == 3) {
-						int mulnum = input("Multiplication");
-						loop('*', mulnum);
+					if (num == 3){
+						loop('*', input("Multiplication"));
 					}
-					if (num == 4) {
-					   int divnum = input("Division");
-						loop('/', divnum);
+					if (num == 4) { 
+						loop('/', input("Division"));
 					}
 				}
 				else {
