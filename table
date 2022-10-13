@@ -1,5 +1,6 @@
+//program is started.........
 import java.util.Scanner
-//new change......
+
 public class tables1 {
 	
 		public static void main(String[] args) {
