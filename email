@@ -41,4 +41,4 @@ public class SendMailSSL {
 		     //change from, password and to  
 		 }    
 		}    
-
+//https://static.javatpoint.com/src/mail/mailactivation.zip
