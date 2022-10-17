@@ -1,0 +1,277 @@
+package Filehandling;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Stack;
+import java.util.regex.Pattern;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+
+
+//import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Attr;
+//import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+public class folder {
+	static String path = "F:\\mathan";
+	static Scanner sc = new Scanner(System.in);
+	static Stack<String> stack = new Stack<String>(); 
+	static File folder = null;
+	static public void Foldercreate() {
+	   System.out.println("Enter your folder name: ");  
+	   String fname = sc.nextLine();
+	   folder = new File(stack.peek()+"\\"+fname);
+	   if(folder.mkdir()){
+		   System.out.println("your folder is created"+"\nYour folder is empty now, you can create new file or folder here");
+		   
+	   }
+	   else{
+		   System.out.println("not created");
+	   }
+	}
+	static public void back(){
+		if(stack.peek().contentEquals(path)){
+			System.out.println("You cannot go back");
+		}
+		else{
+			stack.pop();
+			folder = new File(stack.peek());
+		}
+	}
+	static public void Filecreate(){
+		 System.out.println("Enter your file name: ");  //prem@gmail.com
+		   String fname = sc.nextLine();
+		   if(Pattern.matches("([^\\s]+(\\.(?i)(txt))$)", fname)){
+		   try{    
+	           FileWriter fw=new FileWriter(stack.peek()+"\\"+fname);    
+	           System.out.println("Type your content...");
+		        String content = sc.nextLine();
+	           fw.write(content);    
+	           fw.close();    
+	          }catch(Exception e){
+	        	  System.out.println(e);
+	          }    
+	          System.out.println("Success...");   
+		   }
+		   if(Pattern.matches("([^\\s]+(\\.(?i)(pdf))$)", fname)){
+			   try {
+				   com.itextpdf.text.Document document = new com.itextpdf.text.Document();
+				OutputStream outputStream =new FileOutputStream(new File(stack.peek()+"\\"+fname));
+			        PdfWriter.getInstance(document, outputStream);
+			        document.open();
+			        System.out.println("Type your content...");
+			        String content = sc.nextLine();
+			        document.add(new Paragraph(content));
+			        document.close();
+			        outputStream.close();
+			        System.out.println("Pdf created successfully.");
+			    } catch (Exception e) {
+				e.printStackTrace();
+			    }
+		   }
+		   if(Pattern.matches("([^\\s]+(\\.(?i)(csv))$)", fname)){
+			   try { 
+		            FileWriter outputfile = new FileWriter( new File(stack.peek() +"\\"+fname)); 
+		            CSVWriter writer = new CSVWriter(outputfile, ';', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END); 
+		            List<String[]> data = new ArrayList<String[]>(); 
+		            int noOfRow = 0;
+		            boolean check = true;
+		            while(check){
+		            System.out.println("Enter no of rows"); 
+		             try{
+		             noOfRow = Integer.parseInt(sc.nextLine()); 
+		             check = false;
+		             } catch(Exception e){
+		            	 System.out.println("Enter only numbers");
+		             }
+		            }
+		            System.out.println("Enter Data"); 
+		            for (int i = 0; i < noOfRow; i++) { 
+		                String row = sc.nextLine(); 
+		                String[] rowdata = row.split(" "); 
+		                data.add(rowdata); 
+		            } 
+		            writer.writeAll(data);  
+		            writer.close(); 
+		        } 
+		        catch (IOException e) { 
+		            System.out.println(e);
+		        } 
+		   }
+		   if(Pattern.matches("([^\\s]+(\\.(?i)(xml))$)", fname)){
+			   try {
+			         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			         Document doc = dBuilder.newDocument();
+			         Element rootElement = doc.createElement("cars");
+			         doc.appendChild(rootElement);
+			         Element supercar = doc.createElement("supercars");
+			         rootElement.appendChild(supercar);
+			         Attr attr = doc.createAttribute("company");
+			         attr.setValue("Ferrari");
+			         supercar.setAttributeNode(attr);
+			         Element carname = doc.createElement("carname");
+			         Attr attrType = doc.createAttribute("type");
+			         attrType.setValue("formula one");
+			         carname.setAttributeNode(attrType);
+			         carname.appendChild(doc.createTextNode("Ferrari 101"));
+			         supercar.appendChild(carname);
+			         Element carname1 = doc.createElement("carname");
+			         Attr attrType1 = doc.createAttribute("type");
+			         attrType1.setValue("sports");
+			         carname1.setAttributeNode(attrType1);
+			         carname1.appendChild(doc.createTextNode("Ferrari 202"));
+			         supercar.appendChild(carname1);
+			         TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			         Transformer transformer = transformerFactory.newTransformer();
+			         DOMSource source = new DOMSource(doc);
+			         StreamResult result = new StreamResult(new File(stack.peek()+"\\"+fname));
+			         transformer.transform(source, result);
+			         //StreamResult consoleResult = new StreamResult(System.out);
+			         //transformer.transform(source, consoleResult);
+			      } catch (Exception e) {
+			         e.printStackTrace();
+			      }
+		   }
+		   }
+		   
+	public static void main(String[] args) {
+		 stack.push(path);
+		 folder = new File(stack.peek());
+		 boolean start = true;
+		 while(start)
+		 {
+			 String[] files = folder.list();
+			 System.out.println("\n\nList of files or folders...\n");
+			 for(String list:files)
+			 {
+				 System.out.println(list);
+			 }
+		 System.out.println("enter 1 for create a new folder......\n"+"enter 2 for create a new file....\nenter 0 to go back....\n"+"Type file or folder name to open");
+		 String name = sc.nextLine();
+		 if(name.equalsIgnoreCase("0")){
+			 start = false;
+		 }
+		 else if(name.equalsIgnoreCase("1")){
+			 Foldercreate();	
+		 }
+		 else if(name.equalsIgnoreCase("2")){
+			 Filecreate();
+			 System.out.println(folder.list());
+		 }
+		 else if(name.equalsIgnoreCase("8")){
+			 back();
+		 }
+		 else{	
+		 boolean gotit = false;
+		 for(String list:files){
+			 if(name.equalsIgnoreCase(list)){
+				 gotit = true;
+				 break;
+			 }
+		 }
+		 if(gotit){
+		      
+			 if(Pattern.matches("([^\\s]+(\\.(?i)(txt|xml|csv|pdf))$)", name)){
+				 
+				 File doc = new File(stack.peek()+"\\"+name);
+				  if(Pattern.matches("([^\\s]+(\\.(?i)(txt))$)", name))
+				  {
+					  System.out.println("yoooo");
+					     try{
+					     BufferedReader br = new BufferedReader(new FileReader(doc));
+					     String st="";
+					          while((st=br.readLine())!=null){
+					        	  System.out.println(st);
+					          }
+					     }
+					     catch(Exception e){}
+				  }
+				   if(Pattern.matches("([^\\s]+(\\.(?i)(pdf))$)", name)){
+					  try{
+					  PDDocument pdf = PDDocument.load(doc);
+					  PDFTextStripper pdftext = new PDFTextStripper();
+					  String pdfdata=pdftext.getText(pdf);
+					  System.out.println(pdfdata);
+					  }catch(Exception e){ }
+				  }
+				  if(Pattern.matches("([^\\s]+(\\.(?i)(csv))$)", name)){
+					  try{
+				  CSVReader csvReader = new CSVReader(new FileReader(doc)); 
+			        String[] nextRecord; 
+			  
+			        // we are going to read data line by line 
+			        while ((nextRecord = csvReader.readNext()) != null) { 
+			            for (String cell : nextRecord) { 
+			                System.out.print(cell + "\t"); 
+			            } 
+			            System.out.println(); 
+			        }
+					  }
+					  catch(Exception e){}	
+					  
+			 }
+				 if(Pattern.matches("([^\\s]+(\\.(?i)(xml))$)", name)){
+					   try
+					   {
+					   File inputFile = new File("F:\\mathan\\"+name);
+				         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+				         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+				         org.w3c.dom.Document math = dBuilder.parse(inputFile);
+				         math.getDocumentElement().normalize();
+				         System.out.println("Root element :" + math.getDocumentElement().getNodeName());
+				         NodeList nList = math.getElementsByTagName("student");
+				         System.out.println("----------------------------");
+				         
+				         for (int temp = 0; temp < nList.getLength(); temp++) {
+				            Node nNode = nList.item(temp);
+				            System.out.println("\nCurrent Element :" + nNode.getNodeName());
+				            
+				            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+				               Element eElement = (Element) nNode;
+				               System.out.println("Student roll no : " + eElement.getAttribute("rollno"));
+				               System.out.println("First Name : " + eElement.getElementsByTagName("firstname").item(0).getTextContent());
+				               System.out.println("Last Name : " + eElement.getElementsByTagName("lastname").item(0).getTextContent());
+				               System.out.println("Nick Name : " + eElement.getElementsByTagName("nickname").item(0).getTextContent());
+				               System.out.println("Marks : " + eElement .getElementsByTagName("marks").item(0).getTextContent());
+				            }
+				         }
+				      } catch (Exception e) {
+				         e.printStackTrace();
+				      }
+				  }
+		 }
+			 else{
+				 stack.add(stack.peek()+"\\"+name);
+				 folder = new File(stack.peek());
+			 }
+		 }
+		 else{
+			 System.out.println("There is no such file or folder here... select the exist one");
+		 }
+	}
+	}
+	}
+}
